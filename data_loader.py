@@ -5,22 +5,24 @@ import kagglehub
 def download_yolo_weights():
     """
     Downloads the license plate YOLO weights from Kaggle Hub 
-    and returns the local file path to the .pt model file.
+    and returns paths to the .weights and .cfg files.
     """
     print("Checking/Downloading dataset from Kaggle...")
-    # This downloads the dataset or returns the path if it already exists
     download_path = kagglehub.dataset_download("achrafkhazri/yolo-weights-for-licence-plate-detector")
     
-    # Search for the PyTorch weights file (.pt) inside the downloaded directory
-    pt_files = glob.glob(os.path.join(download_path, "**", "*.pt"), recursive=True)
+    # The dataset contains '.weights' and '.cfg' files instead of '.pt'
+    weights_files = glob.glob(os.path.join(download_path, "**", "*.weights"), recursive=True)
+    cfg_files = glob.glob(os.path.join(download_path, "**", "*.cfg"), recursive=True)
     
-    if not pt_files:
-        raise FileNotFoundError(f"No YOLO .pt weight files found in {download_path}")
+    if not weights_files or not cfg_files:
+        raise FileNotFoundError(
+            f"Could not find the expected darknet files (.weights or .cfg) in {download_path}. "
+            f"Found files: {os.listdir(download_path)}"
+        )
     
-    # Return the path to the first detected weights file
-    return pt_files[0]
+    # Return both file paths needed by Darknet YOLO frameworks
+    return weights_files[0], cfg_files[0]
 
 if __name__ == "__main__":
-    # Test script locally
-    weight_path = download_yolo_weights()
-    print(f"Success! Weights located at: {weight_path}")
+    w_path, c_path = download_yolo_weights()
+    print(f"Success! Weights: {w_path}\nConfig: {c_path}")
