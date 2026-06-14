@@ -1,3 +1,4 @@
 streamlit
 kagglehub
 ultralytics
+opencv-python-headless
