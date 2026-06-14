@@ -45,15 +45,15 @@ if uploaded_file is not None:
             # Display results
             st.image(output_image, use_container_width=True)
             
-    # Display statistics underneath
+   # Display statistics underneath
     num_plates = len(raw_results.boxes)
     if num_plates > 0:
         st.success(f"🎉 Successfully detected {num_plates} license plate(s)!")
         
-        # Optional: Show raw bounding box telemetry data for developers
+        # Show raw bounding box telemetry data for developers
         with st.expander("See raw bounding box data"):
             for box in raw_results.boxes:
-                st.write(f"Confidence: {float(box.conf[0]):.2f}")
-                st.write(f"Coordinates [xyxy]: {box.xyxy[0].tolist()}")
+                st.write(f"Confidence: {box.conf[0]:.2f}")
+                st.write(f"Coordinates [xyxy]: {box.xyxy[0]}")
     else:
         st.warning("No license plates detected. Try an image with a clearer angle or better lighting.")
