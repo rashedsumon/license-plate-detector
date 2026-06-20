@@ -5,7 +5,7 @@ from model import PlateDetector
 # Set up page configurations
 st.set_page_config(page_title="AI License Plate Detector", page_icon="🚗", layout="centered")
 
-st.title("🚗 AI License Plate Detector")
+st.title("🚗 License Plate Detecton")
 st.write("Upload an image of a vehicle below, and our YOLO model will attempt to locate the license plate.")
 
 # Initialize the model using Streamlit's session state cache 
